@@ -1,0 +1,64 @@
+Today's date:
+from datetime import date
+today = date.today()
+formatted_date = "/" + today.strftime("%d-%m-%Y").replace("-0", "-")
+print("Today's date:", formatted_date)
+
+
+
+
+import tensorflow as tf
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Dense, Dropout
+from tensorflow.keras.losses import Loss
+from tensorflow.keras.optimizers import Optimizer
+from tensorflow.keras.regularizers import Regularizer
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.model_selection import train_test_split
+import numpy as np
+import pandas as pd
+import re
+import matplotlib.pyplot as plt
+import seaborn as sns
+from PIL import Image
+import warnings
+
+# Configure warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
+pd.options.mode.chained_assignment = None  # default='warn'
+pd.set_option('display.max_columns', None)
+
+
+
+# Load the provided datasets
+train_df = pd.read_csv("train.csv")
+test_df = pd.read_csv("test.csv")
+
+datasets = {
+    "train.csv": train_df,
+    "test.csv": test_df
+}
+
+i = 0
+
+for fname, df in datasets.items():
+    match = re.search('train|test', fname)
+    if match:
+        print(f"Reading {match.group()} ..")
+        i += 1
+
+        try:
+            # Drop all-empty columns
+            df.dropna(axis='columns', how='all', inplace=True)
+
+            print(f"Successfully Read {match.group()}")
+
+        except pd.errors.ParserError as e:
+            print(f"Error processing {match.group()}: {e}")
+
+
+
+
+
